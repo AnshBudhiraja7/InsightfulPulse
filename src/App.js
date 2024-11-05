@@ -25,7 +25,7 @@ const App = () => {
           <Route path='/AuthorDetails' element={<AuthorDetails />} />
           <Route path='/Privacy' element={<Privacy />} />
           <Route path='/TermsandCondition' element={<TermsandCondition />} />
-          <Route path='/Error' element={<Error />} />
+          <Route path='*' element={<Error />} />
           <Route path='/Blog' element={<Blog />} />
           <Route path='/Blogdetails' element={<Blogdetails />} />
           <Route path='/Login' element={<Login />} />
@@ -40,4 +40,4 @@ const App = () => {
   )
 }
 
-export default App
+export default App
