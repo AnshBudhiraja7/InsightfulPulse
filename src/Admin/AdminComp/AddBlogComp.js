@@ -63,9 +63,25 @@ const set1=(event,Obj,index)=>{
                                         </div>
                                     </div>
                                     <div className="col-lg-6">
-                                        <div className="form-group">
-                                        <a className="btn-two w-100 d-block">Upload Heading Image<i className="flaticon-right-arrow" /></a>
+                                    <div className="checkout-box" style={{backgroundColor:'transparent',padding:"0px"}}>
+                                    <div className="checkout-details" style={{paddingLeft:"20px",paddingRight:"20px"}}>
+                                        <div className="bill-details">
+                                            <div style={{display:"flex",flexWrap:"nowrap",marginTop:"10px"}} className="select-payment-method">
+                                                <div>
+                                                    <span style={{fontSize:"20px"}}>Status:</span>
+                                                </div>
+                                                <div>
+                                                    <input type="radio" onClick={radiocheck} id="Active" name="Status" />
+                                                    <label htmlFor="Active">Active</label>
+                                                </div>
+                                                <div>
+                                                    <input type="radio" onClick={radiocheck} id="In-Active" name="Status" />
+                                                    <label htmlFor="In-Active">In-Active</label>
+                                                </div>
+                                            </div>
                                         </div>
+                                    </div>
+                                </div>
                                     </div>
                                     <div className="col-lg-6">
                                         <div className="form-group">
@@ -74,7 +90,7 @@ const set1=(event,Obj,index)=>{
                                     </div>
                                     <div className="col-lg-6">
                                         <div className="form-group">
-                                        <a className="btn-two w-100 d-block" onClick={Create}>Create Sub-Heading<i className="flaticon-right-arrow" /></a>
+                                        <a className="btn-two w-100 d-block" style={{height:"48px",padding:"9px"}} onClick={Create}>Create Sub-Heading<i className="flaticon-right-arrow" /></a>
                                         </div>
                                     </div>
                                     {
@@ -95,27 +111,6 @@ const set1=(event,Obj,index)=>{
                                             )
                                         })
                                     }
-                                    <div className="col-lg-12">
-                                    <div className="checkout-box" style={{backgroundColor:'transparent'}}>
-                                    <div className="checkout-details">
-                                        <div className="bill-details">
-                                            <div style={{display:"flex",flexWrap:"nowrap"}} className="select-payment-method mt-20">
-                                                <div>
-                                                    <span style={{fontSize:"20px"}}>Status:</span>
-                                                </div>
-                                                <div>
-                                                    <input type="radio" onClick={radiocheck} id="Active" name="Status" />
-                                                    <label htmlFor="Active">Active</label>
-                                                </div>
-                                                <div>
-                                                    <input type="radio" onClick={radiocheck} id="In-Active" name="Status" />
-                                                    <label htmlFor="In-Active">In-Active</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                    </div>
                                     <div className="col-lg-12 mt-4">
                                         <div className="form-group mb-0">
                                             <button type="submit" className="btn-one">Submit<i className="flaticon-right-arrow" /></button>
@@ -127,64 +122,24 @@ const set1=(event,Obj,index)=>{
                         <div className="col-xxl-4 col-xl-5 col-lg-5">
                             <div className="sidebar">
                                 <div className="checkout-box">
-                                    <h4 className="cart-box-title">Your Order</h4>
+                                    <h4 className="cart-box-title">Heading Image</h4>
                                     <div className="cart-total">
                                         <div className="cart-total-wrap">
-                                            <div className="cart-total-item">
-                                                <p>Product Name</p>
-                                                <b>Total</b>
-                                            </div>
-                                            <div className="cart-total-item">
-                                                <p>Subtotal</p>
-                                                <span>$463.00</span>
-                                            </div>
-                                            <div className="cart-total-item">
-                                                <p>Shipping</p>
-                                                <span>$30.00</span>
-                                            </div>
-                                            <div className="cart-total-item">
-                                                <p>Coupon</p>
-                                                <span>$0.00</span>
-                                            </div>
-                                            <div className="cart-total-item">
-                                                <p>Order Total</p>
-                                                <span>$43.00</span>
-                                            </div>
-                                            <div className="cart-total-item">
-                                                <p><b>Payable Total</b></p>
-                                                <span>$450.00</span>
-                                            </div>
+                                        <img className='img-thumbnail' height={"100%"} width={"100%"} src="assets/img/newsletter-bg.webp" alt="" />
                                         </div>
-                                        <a href="checkout.html" className="btn-two w-100 d-block">Proceed To Checkout<i className="flaticon-right-arrow" /></a>
+                                        <a className="btn-two w-100 d-block">Upload Heading Image<i className="flaticon-right-arrow" /></a>
                                     </div>
                                 </div>
                                 <div className="checkout-box">
-                                    <h4 className="cart-box-title">Direct Order By Bank</h4>
+                                    <h4 className="cart-box-title">Upload More Images</h4>
                                     <div className="checkout-details">
-                                        <p>Make your payments directly to your bank account
-                                            Use your order ID as the payment reference.
-                                            Your order will not be sent until the funds
-                                            in your account have been cleared.</p>
+                                        <div className='myimages'>
+                                            <img src="assets/img/newsletter-bg.webp" alt="" />
+                                            <i>&times;</i>
+                                        </div>
                                         <div className="bill-details">
-                                            <div className="select-payment-method mt-20">
-                                                <div>
-                                                    <input type="radio" id="test3" name="radio-group" />
-                                                    <label htmlFor="test3">Paypal</label>
-                                                </div>
-                                                <div>
-                                                    <input type="radio" id="test2" name="radio-group" />
-                                                    <label htmlFor="test2">Postpaid Payment</label>
-                                                </div>
-                                            </div>
-                                            <div className="form-check checkbox style2">
-                                                <input className="form-check-input" type="checkbox" id="test_2" />
-                                                <label className="form-check-label" htmlFor="test_2">
-                                                    I've read &amp; accept the <a href="terms-conditions.html">Terms &amp;
-                                                        Conditions</a>
-                                                </label>
-                                            </div>
                                             <div className="checkout-footer mt-4">
-                                                <button type="button" className="btn-one d-block w-100 mt-10">Place Order<i className="flaticon-right-arrow" /></button>
+                                                <button type="button" className="btn-two d-block w-100 mt-10">Upload Images<i className="flaticon-right-arrow" /></button>
                                             </div>
                                         </div>
                                     </div>
