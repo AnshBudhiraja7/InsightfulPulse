@@ -1,8 +1,13 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 const AddBlogComp = () => {
 const[obj,setobj]=useState({})
 const[inputs,setinputs]=useState([])
+const[headingimage,setheadingimage]=useState(null)
+const[images,setimages]=useState([])
+const[imageserror,setimageserror]=useState(null)
+const image=useRef()
+const multipleimage=useRef()
 const set=(event)=>{
 setobj({...obj,[event.target.name]:event.target.value})
 }
@@ -26,6 +31,43 @@ const set1=(event,Obj,index)=>{
 //     console.log(response);
     
 }
+const upload=(event)=>{
+    const file=event.target.files[0]
+    if(!file) return alert("Image is not uploaded yet.")
+
+    const ext=file.type.split("/")
+    if(ext[0]!=="image") return alert("Only image is supported")
+    
+    if(ext[1]==="png" || ext[1]==="jpg" || ext[1]==="jpeg" || ext[1]==="PNG"){
+       return setheadingimage(file)
+    }
+    return alert("Only png,jpeg and jpg image is supported")  
+}
+function uploads(event){
+    const file=event.target.files
+    if(!file) return alert("No Image is selected")
+    
+    let status=images
+    let count=0
+    for(let i=0;i<file.length;i++){
+       const ext =file[i].type.split("/")
+       if(ext[0]!=="image"){
+        count++
+       }
+       else{
+        if(ext[1]==="png" || ext[1]==="PNG" || ext[1]==="jpg" || ext[1]==="jpeg"){
+            status.push(file[i])
+        }
+        else{
+        count++  
+        }
+       } 
+    }
+    setimages([...status])
+    setimageserror(count)
+}
+console.log(images,imageserror);
+
     return (
         <div>
             <div className="checkout-wrap ptb-100">
@@ -125,9 +167,10 @@ const set1=(event,Obj,index)=>{
                                     <h4 className="cart-box-title">Heading Image</h4>
                                     <div className="cart-total">
                                         <div className="cart-total-wrap">
-                                        <img className='img-thumbnail' height={"100%"} width={"100%"} src="assets/img/newsletter-bg.webp" alt="" />
+                                        <img className='img-thumbnail' height={"100%"} width={"100%"} src={headingimage?URL.createObjectURL(headingimage):"assets/img/newsletter-bg.webp"} alt="" />
                                         </div>
-                                        <a className="btn-two w-100 d-block">Upload Heading Image<i className="flaticon-right-arrow" /></a>
+                                        <input type="file" onChange={upload} accept='image/*' hidden ref={image} />
+                                        <a className="btn-two w-100 d-block" onClick={()=>image.current.click()}>Upload Heading Image<i className="flaticon-right-arrow" /></a>
                                     </div>
                                 </div>
                                 <div className="checkout-box">
@@ -139,7 +182,8 @@ const set1=(event,Obj,index)=>{
                                         </div>
                                         <div className="bill-details">
                                             <div className="checkout-footer mt-4">
-                                                <button type="button" className="btn-two d-block w-100 mt-10">Upload Images<i className="flaticon-right-arrow" /></button>
+                                                <input ref={multipleimage} multiple={true} onChange={uploads} accept='image/*' type="file" hidden/>
+                                                <button type="button" onClick={()=>multipleimage.current.click()} className="btn-two d-block w-100 mt-10">Upload Images<i className="flaticon-right-arrow" /></button>
                                             </div>
                                         </div>
                                     </div>
