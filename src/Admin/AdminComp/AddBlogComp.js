@@ -47,9 +47,15 @@ function uploads(event){
     const file=event.target.files
     if(!file) return alert("No Image is selected")
     
+    if(file.length>10) return alert("Only 10 images are allowed") 
+    
     let status=images
     let count=0
-    for(let i=0;i<file.length;i++){
+    for(let i=0;i<file.length;i++){ 
+        if(status.length>9){
+         alert("Only 10 images are allowed")
+         break;
+        }
        const ext =file[i].type.split("/")
        if(ext[0]!=="image"){
         count++
@@ -66,8 +72,24 @@ function uploads(event){
     setimages([...status])
     setimageserror(count)
 }
-console.log(images,imageserror);
+function Remove(index){
+    images.splice(index,1)
+    setimages([...images])
+}
+function Submit(e){
+    e.preventDefault()
+    if(!obj.Title || !obj.Heading || !obj.Author || !obj.Description|| !obj.Category|| !obj.Tags|| !obj.Status) return alert("Field is Empty")
 
+    if(!headingimage) return alert("Upload heading image first")
+    
+    
+    
+    
+    if(images.length!==0)
+    {
+        console.log(images);
+    }
+}
     return (
         <div>
             <div className="checkout-wrap ptb-100">
@@ -155,7 +177,7 @@ console.log(images,imageserror);
                                     }
                                     <div className="col-lg-12 mt-4">
                                         <div className="form-group mb-0">
-                                            <button type="submit" className="btn-one">Submit<i className="flaticon-right-arrow" /></button>
+                                            <button type="submit" onClick={Submit} className="btn-one">Submit<i className="flaticon-right-arrow" /></button>
                                         </div>
                                     </div>
                                 </div>
@@ -176,10 +198,25 @@ console.log(images,imageserror);
                                 <div className="checkout-box">
                                     <h4 className="cart-box-title">Upload More Images</h4>
                                     <div className="checkout-details">
-                                        <div className='myimages'>
-                                            <img src="assets/img/newsletter-bg.webp" alt="" />
-                                            <i>&times;</i>
-                                        </div>
+                                        {
+                                            images.map(function(Obj,index){
+                                                return(
+                                                    <div key={index} className='myimages'>
+                                                        <img src={Obj?URL.createObjectURL(Obj):"assets/img/newsletter-bg.webp"} alt="" />
+                                                        <i onClick={()=>Remove(index)}>&times;</i>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br /><br /><br />
+                                        <br />
+                                        <br />
+                                        {
+                                            imageserror?<p style={{fontSize:"20px",color:"red",textAlign:"center"}}>{imageserror+" files are not of image type."}</p>:""
+                                        }
                                         <div className="bill-details">
                                             <div className="checkout-footer mt-4">
                                                 <input ref={multipleimage} multiple={true} onChange={uploads} accept='image/*' type="file" hidden/>
