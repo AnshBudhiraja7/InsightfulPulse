@@ -24,7 +24,7 @@ async function Submit(e){
    const result=await auth.signInWithEmailAndPassword(obj.Email,obj.Password)
    localStorage.setItem("Users",JSON.stringify(result.user.uid))
    setobj({})
-   navigate("/Blogs")
+   navigate("/Admin")
   } catch (error) {
     return alert("Invalid Credentials")
   } finally{

@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import Firebase, { storage } from '../../Firebase'
+import { useNavigate } from 'react-router-dom'
 
 const AddBlogComp = () => {
 const[obj,setobj]=useState({})
@@ -7,9 +8,11 @@ const[inputs,setinputs]=useState([])
 const[headingimage,setheadingimage]=useState(null)
 const[images,setimages]=useState([])
 const[btndisable,setbtndisable]=useState(false)
+const[loader,setloader]=useState(false)
 const[imageserror,setimageserror]=useState(null)
 const image=useRef()
 const multipleimage=useRef()
+const navigate=useNavigate()
 const set=(event)=>{
 setobj({...obj,[event.target.name]:event.target.value})
 }
@@ -82,6 +85,7 @@ async function Submit(e){
     e.preventDefault()
     try {
       setbtndisable(true)
+      setloader(true)
       if(!obj.Author || !obj.Category || !obj.Description || !obj.Heading || !obj.Tags || !obj.Title || !obj.Status) return alert("Field is Empty")
       if(!headingimage) return alert("Upload heading image first")
     
@@ -92,7 +96,13 @@ async function Submit(e){
         }
       }      
       if(count>0) return alert("Some Field are empty in Sub-Heading Part.")
-        
+    
+        const user=JSON.parse(localStorage.getItem("Users"))
+        if(!user){
+            alert("Unauthorised user")
+            window.history.replaceState(null,null,"/Login")
+            return navigate("/",{replace:true})
+        }
 
       // saving heading image storage
 
@@ -118,10 +128,11 @@ async function Submit(e){
         mydata={...mydata,"Images":myarray}
       }
 
-        Firebase.child("Blogs").push(mydata,err=>{
+        Firebase.child("Blogs").child(user).push(mydata,err=>{
           if(err) return alert("Something went wrong. Try again later")
           else return alert("Blog Uploaded")
         })
+        setTimeout(()=>navigate("/Blogs"),1500);
     } catch (error) {
       return alert("Something Went Wrong. Try again later")
     } finally{
@@ -129,13 +140,17 @@ async function Submit(e){
      setheadingimage(null)
      setimages([])
      setinputs([]) 
-     setbtndisable(false)    
+     setbtndisable(false)  
+     setloader(false)  
     }
   }
     return (
         <div>
             <div className="checkout-wrap ptb-100">
                 <div className="container">
+                {
+                loader && <div className='preloaders'><div className='loaders'></div></div>
+                }
                     <div className="row">
                         <div className="col-xxl-8 col-xl-7 col-lg-7">
                             <form action="#" className="checkout-form">
@@ -177,11 +192,11 @@ async function Submit(e){
                                                     <span style={{fontSize:"20px"}}>Status:</span>
                                                 </div>
                                                 <div>
-                                                    <input type="radio" onClick={radiocheck} id="Active" name="Status" />
+                                                    <input type="radio" onClick={radiocheck} checked={obj.Status==="Active"?true:false} id="Active" name="Status" />
                                                     <label htmlFor="Active">Active</label>
                                                 </div>
                                                 <div>
-                                                    <input type="radio" onClick={radiocheck} id="In-Active" name="Status" />
+                                                    <input type="radio" onClick={radiocheck} checked={obj.Status==="In-Active"?true:false} id="In-Active" name="Status" />
                                                     <label htmlFor="In-Active">In-Active</label>
                                                 </div>
                                             </div>
@@ -191,7 +206,7 @@ async function Submit(e){
                                     </div>
                                     <div className="col-lg-6">
                                         <div className="form-group">
-                                            <input type="text" name="Tags" value={obj.Tags?obj.Tags:""} onChange={set} placeholder="Enter your Tags" />
+                                            <input type="text" name="Tags" value={obj.Tags?obj.Tags:""} onChange={set} placeholder="Enter your Tags separated by comma (,)." />
                                         </div>
                                     </div>
                                     <div className="col-lg-6">
