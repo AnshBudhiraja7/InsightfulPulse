@@ -13,8 +13,9 @@ const[imageserror,setimageserror]=useState(null)
 const image=useRef()
 const multipleimage=useRef()
 const navigate=useNavigate()
+const date=new Date()
 const set=(event)=>{
-setobj({...obj,[event.target.name]:event.target.value})
+setobj({...obj,[event.target.name]:event.target.value,"Date":date})
 }
 const Create=()=>{
     setinputs(inputs=>[...inputs,{id:inputs.length+1}])
@@ -132,7 +133,7 @@ async function Submit(e){
           if(err) return alert("Something went wrong. Try again later")
           else return alert("Blog Uploaded")
         })
-        setTimeout(()=>navigate("/Blogs"),1500);
+        setTimeout(()=>navigate("/Admin/Blogs"),1500);
     } catch (error) {
       return alert("Something Went Wrong. Try again later")
     } finally{
