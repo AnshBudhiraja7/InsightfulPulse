@@ -13,9 +13,9 @@ const[imageserror,setimageserror]=useState(null)
 const image=useRef()
 const multipleimage=useRef()
 const navigate=useNavigate()
-const date=new Date()
+
 const set=(event)=>{
-setobj({...obj,[event.target.name]:event.target.value,"Date":date})
+setobj({...obj,[event.target.name]:event.target.value,"Date":Date.now()})
 }
 const Create=()=>{
     setinputs(inputs=>[...inputs,{id:inputs.length+1}])
@@ -133,7 +133,7 @@ async function Submit(e){
           if(err) return alert("Something went wrong. Try again later")
           else return alert("Blog Uploaded")
         })
-        setTimeout(()=>navigate("/Admin/Blogs"),1500);
+        setTimeout(()=>navigate("/Blogs"),1500);
     } catch (error) {
       return alert("Something Went Wrong. Try again later")
     } finally{
@@ -193,11 +193,11 @@ async function Submit(e){
                                                     <span style={{fontSize:"20px"}}>Status:</span>
                                                 </div>
                                                 <div>
-                                                    <input type="radio" onClick={radiocheck} checked={obj.Status==="Active"?true:false} id="Active" name="Status" />
+                                                    <input type="radio" onClick={radiocheck} readOnly={true} checked={obj.Status==="Active"?true:false} id="Active" name="Status" />
                                                     <label htmlFor="Active">Active</label>
                                                 </div>
                                                 <div>
-                                                    <input type="radio" onClick={radiocheck} checked={obj.Status==="In-Active"?true:false} id="In-Active" name="Status" />
+                                                    <input type="radio" onClick={radiocheck} readOnly={true} checked={obj.Status==="In-Active"?true:false} id="In-Active" name="Status" />
                                                     <label htmlFor="In-Active">In-Active</label>
                                                 </div>
                                             </div>
@@ -247,7 +247,7 @@ async function Submit(e){
                                     <h4 className="cart-box-title">Heading Image</h4>
                                     <div className="cart-total">
                                         <div className="cart-total-wrap">
-                                        <img className='img-thumbnail' height={"100%"} width={"100%"} src={headingimage?URL.createObjectURL(headingimage):"assets/img/newsletter-bg.webp"} alt="" />
+                                        <img className='img-thumbnail' height={"100%"} width={"100%"} src={headingimage?URL.createObjectURL(headingimage):"/assets/img/newsletter-bg.webp"} alt="" />
                                         </div>
                                         <input type="file" onChange={upload} accept='image/*' hidden ref={image} />
                                         <a className="btn-two w-100 d-block" onClick={()=>image.current.click()}>Upload Heading Image<i className="flaticon-right-arrow" /></a>
