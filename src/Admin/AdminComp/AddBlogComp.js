@@ -247,7 +247,7 @@ async function Submit(e){
                                     <h4 className="cart-box-title">Heading Image</h4>
                                     <div className="cart-total">
                                         <div className="cart-total-wrap">
-                                        <img className='img-thumbnail' height={"100%"} width={"100%"} src={headingimage?URL.createObjectURL(headingimage):"/assets/img/newsletter-bg.webp"} alt="" />
+                                        <img className='img-thumbnail' height={"100%"} width={"100%"} src={headingimage?URL.createObjectURL(headingimage):"/assets/img/noimage.jpg"} alt="" />
                                         </div>
                                         <input type="file" onChange={upload} accept='image/*' hidden ref={image} />
                                         <a className="btn-two w-100 d-block" onClick={()=>image.current.click()}>Upload Heading Image<i className="flaticon-right-arrow" /></a>
@@ -260,7 +260,7 @@ async function Submit(e){
                                             images.map(function(Obj,index){
                                                 return(
                                                     <div key={index} className='myimages'>
-                                                        <img src={Obj?URL.createObjectURL(Obj):"assets/img/newsletter-bg.webp"} alt="" />
+                                                        <img src={Obj?URL.createObjectURL(Obj):"/assets/img/noimage.jpg"} alt="" />
                                                         <i onClick={()=>Remove(index)}>&times;</i>
                                                     </div>
                                                 )
