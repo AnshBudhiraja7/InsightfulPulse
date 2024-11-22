@@ -28,9 +28,8 @@ useEffect(()=>{
       Times:count
     }
     finalarray.push(objects)
-   } 
-   setcategory(finalarray);
-   
+   }    
+   setcategory(finalarray); 
   }
 },[fetchblogs])
   return (
