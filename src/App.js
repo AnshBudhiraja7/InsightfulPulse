@@ -16,11 +16,13 @@ import BlogShow from './Admin/AdminPages/BlogShow'
 import MyAccount from './Admin/AdminPages/MyAccount'
 import AdminBlogDetail from './Admin/AdminPages/AdminBlogDetail'
 import AdminRoutes from './Admin/AdminRoutes'
+import UserRoute from './Pages/UserRoute'
 const App = () => {
   return (
     <div className='theme-dark'>
       <BrowserRouter>
         <Routes>
+         <Route element={<UserRoute/>}>
           <Route path='/' element={<Home />} />
           <Route path='/Author' element={<Author />} />
           <Route path='/AuthorDetails' element={<AuthorDetails />} />
@@ -31,6 +33,7 @@ const App = () => {
           <Route path='/Blogdetails' element={<Blogdetails />} />
           <Route path='/Login' element={<Login />} />
           <Route path='/Signup' element={<Signup />} />
+         </Route>
           
           {/* admin routes using context */}
           <Route element={<AdminRoutes/>}>
