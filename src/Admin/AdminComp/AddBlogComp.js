@@ -145,12 +145,11 @@ async function Submit(e){
      setloader(false)  
     }
   }
-    return (
-        <div>
-            <div className="checkout-wrap ptb-100">
+    return(
+        <div className="checkout-wrap ptb-100">
                 <div className="container">
                 {
-                loader && <div className='preloaders'><div className='loaders'></div></div>
+                    loader && <div className='preloaders'><div className='loaders'></div></div>
                 }
                     <div className="row">
                         <div className="col-xxl-8 col-xl-7 col-lg-7">
@@ -287,8 +286,6 @@ async function Submit(e){
                         </div>
                     </div>
                 </div>
-            </div>
-
         </div>
     )
 }
