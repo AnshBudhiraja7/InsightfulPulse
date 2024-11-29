@@ -38,11 +38,11 @@ const HomeInstaSlider = (props) => {
                 {
                     props?.data && props?.data?.map((obj,index)=>{
                         return(
-                            <SwiperSlide key={index}>
-                    <a className="instagram-slide" href={obj?.urls?obj?.urls:"#"} target="_blank" rel="noopener noreferrer">
-                        <img style={{height:"250px",width:"400px"}} src={obj?.urls?obj?.urls:"assets/img/instagram/insta-1.webp"} alt="Image" />
+                        <SwiperSlide key={index}>
+                      <a className="instagram-slide" href={obj?.urls?obj?.urls:"#"} target="_blank" rel="noopener noreferrer">
+                        <img loading='lazy' style={{height:"250px",width:"400px"}} src={obj?.urls?obj?.urls:"assets/img/instagram/insta-1.webp"} alt="Image" />
                         <span>{obj.paths}<i className="flaticon-right-arrow" /></span>
-                    </a>
+                      </a>
                         </SwiperSlide>
                         )
                     })

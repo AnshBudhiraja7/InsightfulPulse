@@ -34,10 +34,10 @@ async function Submit(e){
     return (
         <div className="login-wrap">
                 <div className="login-bg">
-                    <a href="index.html" className="navbar-brand">
+                    <Link to="/" className="navbar-brand">
                         <img className="logo-light" src="assets/img/logo-white.webp" alt="Image" />
                         <img className="logo-dark" src="assets/img/logo-white.webp" alt="Image" />
-                    </a>
+                    </Link>
                 </div>
                 <div className="login-content">
                     <Link to={'/'} className="link-one"><i className="ri-arrow-left-s-line" />Back</Link>
