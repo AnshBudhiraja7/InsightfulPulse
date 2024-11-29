@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Firebase, { storage } from '../../Firebase'
 import { useNavigate } from 'react-router-dom'
+import AdminBlogContext from '../Context/AdminBlogContext'
 
 const MyAccountcomp = (props) => {
   const[image,setimage]=useState(null)
   const[btndisable,setbtndisable]=useState(false)
   const navigate=useNavigate()
+  const {fetchblogs}=useContext(AdminBlogContext)
   const upload=(event)=>{
     const file=event.target.files[0]
     if(!file) return alert("Image is not uploaded yet.")
@@ -53,24 +55,25 @@ const submit=async(e)=>{
       {props.user.ProfileImage? <div className="container">
       <div className="author-box">
         <div className="author-img">
-          <img alt="Image" src="assets/img/author/single-author.jpg" style={{display: 'none', visibility: 'hidden'}} />
+          <img loading='lazy' alt="Image" src={props?.user?.ProfileImage?.url?props?.user?.ProfileImage?.url:"assets/img/author/single-author.jpg"} />
         </div>
-        <div className="author-info">
-          <h4>Scarlett Emily</h4>
+        <div style={{marginLeft:"100px"}} className="author-info">
+          <h4>{props?.user?.Name}</h4>
+          <h5>{props?.user?.Email}</h5>
           <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered
             alteration in some form, by injected humour, or ran domised words which don't look even slightly
             believable.</p>
           <div className="author-profile">
-            <ul className="social-profile list-style">
+            {/* <ul className="social-profile list-style">
               <li><a href="https://www.fb.com/" target="_blank"><i className="ri-facebook-fill" /></a></li>
               <li><a href="https://www.twitter.com/" target="_blank"><i className="ri-twitter-fill" /></a>
               </li>
               <li><a href="https://www.instagram.com/" target="_blank"><i className="ri-instagram-line" /></a></li>
               <li><a href="https://www.linkedin.com/" target="_blank"><i className="ri-linkedin-fill" /></a>
               </li>
-            </ul>
+            </ul> */}
             <div className="author-stat">
-              <span>40 Articles</span>
+              {fetchblogs && <span>{Object.keys(fetchblogs).length} Blogs</span>}
               <span>191 Comments</span>
             </div>
           </div>
