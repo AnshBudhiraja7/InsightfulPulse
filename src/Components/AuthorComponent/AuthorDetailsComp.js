@@ -1,6 +1,8 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const AuthorDetailsComp = ({data,blogs,category}) => {
+  const navigate=useNavigate()
 function getDate(date){
   if(!date) return "-----"
   const d=new Date(date)
@@ -48,12 +50,12 @@ function getDate(date){
           <div className="popular-news-wrap">
             {
               blogs && Object.keys(blogs).reverse().map((key,index)=><div key={index} className="news-card-five">
-              <div className="news-card-img">
+              <div onClick={()=>{localStorage.setItem("BlogDetails",JSON.stringify(key)); navigate("/BlogDetails")}} className="news-card-img">
                 <img style={{height:"180px"}} loading='lazy' src={blogs[key]?.HeadingImage?.url?blogs[key]?.HeadingImage.url:"assets/img/news/news-70.webp"} alt="Image" />
                 <a href="#" className="news-cat">{blogs[key]?.Category}</a>
               </div>
               <div className="news-card-info">
-                <h3><a href="#">{blogs[key]?.Title}</a></h3>
+                <h3><a onClick={()=>{localStorage.setItem("BlogDetails",JSON.stringify(key)); navigate("/BlogDetails")}}>{blogs[key]?.Title}</a></h3>
                 <p>{blogs[key]?.Description?.slice(0,100)}</p>
                 <ul className="news-metainfo list-style">
                   <li className="author">
