@@ -1,6 +1,8 @@
 import React,{useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { auth } from '../Firebase'
+import Firebase, { auth } from '../Firebase'
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'
+import { jwtDecode } from 'jwt-decode'
 
 const Login = () => {
 const[obj,setobj]=useState({})
@@ -31,6 +33,16 @@ async function Submit(e){
     setbtndisable(false)
   }
 }
+function create(e){
+   const result= jwtDecode(e.credential)
+   Firebase.child("Users").child(result.sub).set({Email:result.email,Name:result.name,ProfileImage:{url:result.picture}},err=>{
+    if(err) return alert("Something went wrong. Try again later")
+    else{
+        localStorage.setItem("Users",JSON.stringify(result.sub))
+        return navigate("/Blogs")
+    }
+   })
+}
     return (
         <div className="login-wrap">
                 <div className="login-bg">
@@ -44,8 +56,11 @@ async function Submit(e){
                     <div className="login-form">
                         <h3>Welcome Back</h3>
                         <div className="alt-login">
-                            <a style={{width:"100%"}} href="https://www.gmail.com/"><img src="assets/img/icons/google.svg" alt="Image" />Login With
-                                Google</a>
+                            <GoogleOAuthProvider clientId='533469549338-3nhcac7c073iqkk830mv0r8tk2996c5f.apps.googleusercontent.com'>
+                                <GoogleLogin useOneTap={true} onSuccess={create}></GoogleLogin>
+                            </GoogleOAuthProvider>
+                            {/* <a style={{width:"100%"}} href="https://www.gmail.com/"><img src="assets/img/icons/google.svg" alt="Image" />Login With
+                                Google</a> */}
                         </div>
                         <div className="text-center">
                             <span className="or-text">OR</span>

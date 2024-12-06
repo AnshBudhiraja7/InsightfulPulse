@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Firebase from '../../Firebase'
 import { useNavigate } from 'react-router-dom'
 
-const BlogDetailComp = ({data,thisuserallblog,previous,next}) => {
+const BlogDetailComp = ({data,thisuserallblog,previous,next,fun}) => {
     const[obj,setobj]=useState({})
     const[loading,setloading]=useState(false)
     const[comments,setcomments]=useState(null)
@@ -79,11 +79,11 @@ return (
                     </div>)}
                 </article>
                 <div className="post-pagination">
-                    {previous?<a onClick={()=>{localStorage.setItem("BlogDetails",JSON.stringify(previous.BlogKey)); navigate("/BlogDetails")}} className="prev-post">
+                    {previous?<a onClick={()=>{localStorage.setItem("BlogDetails",JSON.stringify(previous.BlogKey)); navigate("/BlogDetails"); fun(previous.BlogKey)}} className="prev-post">
                         <span>PREVIOUS</span>
                         <h6>{previous?.Title}</h6>
                     </a>:<a></a>}
-                    { next && <a onClick={()=>{localStorage.setItem("BlogDetails",JSON.stringify(next.BlogKey)); navigate("/BlogDetails")}} className="next-post">
+                    { next && <a onClick={()=>{localStorage.setItem("BlogDetails",JSON.stringify(next.BlogKey)); navigate("/BlogDetails"); fun(next.BlogKey)}} className="next-post">
                         <span>NEXT</span>
                         <h6>{next?.Title}</h6>
                     </a>}
@@ -150,11 +150,11 @@ return (
                         <h3 className="sidebar-widget-title">Recent Posts</h3>
                         <div className="pp-post-wrap">
                             {thisuserallblog?.map((obj,index)=>obj.BlogKey!==data.BlogKey && <div key={index} className="news-card-one">
-                                <div onClick={()=>{localStorage.setItem("BlogDetails",JSON.stringify(obj.BlogKey)); navigate("/BlogDetails")}} className="news-card-img">
+                                <div onClick={()=>{localStorage.setItem("BlogDetails",JSON.stringify(obj.BlogKey)); navigate("/BlogDetails"); fun(obj.BlogKey)}} className="news-card-img">
                                     <img loading='lazy' style={{height:"80px",width:"90px"}} src={obj?.HeadingImage?.url?obj?.HeadingImage?.url:"assets/img/news/news-thumb-4.webp"} alt="Image" />
                                 </div>
                                 <div className="news-card-info">
-                                    <h3><a onClick={()=>{localStorage.setItem("BlogDetails",JSON.stringify(obj.BlogKey)); navigate("/BlogDetails")}} href="#">{obj?.Title}</a></h3>
+                                    <h3><a onClick={()=>{localStorage.setItem("BlogDetails",JSON.stringify(obj.BlogKey)); navigate("/BlogDetails"); fun(obj.BlogKey)}} href="#">{obj?.Title}</a></h3>
                                     <ul className="news-metainfo list-style">
                                         <li><i className="fi fi-rr-calendar-minus" /><a href="#">{getDate(obj?.Date)}</a></li>
                                     </ul>

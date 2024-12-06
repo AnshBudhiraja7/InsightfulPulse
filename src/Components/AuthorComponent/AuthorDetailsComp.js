@@ -1,12 +1,37 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Firebase from '../../Firebase'
 
 const AuthorDetailsComp = ({data,blogs,category}) => {
   const navigate=useNavigate()
+  const[number,setnumber]=useState(0)
 function getDate(date){
   if(!date) return "-----"
   const d=new Date(date)
   return (`${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`)
+}
+useEffect(()=>{
+  const token=JSON.parse(localStorage.getItem("Authors"))
+  if(!token) return setnumber(0)
+  Firebase.child(`Comments/${token}`).on("value",function(snap){
+    if(snap.val()){
+      let result=0
+      Object.keys(snap.val()).map(key=>{
+        result=result+Object.keys(snap.val()[key]).length
+      })
+      setnumber(result)
+    }
+    else return setnumber(0)
+  })
+},[])
+function getComments(key){
+  let value=0
+  const token=JSON.parse(localStorage.getItem("Authors"))
+  if(!token) return value=0
+  Firebase.child(`Comments/${token}/${key}`).on("value",function(snap){
+    if(snap.val()) return value=Object.keys(snap.val()).length
+  })
+  return value
 }
   return (
     <div>
@@ -33,7 +58,7 @@ function getDate(date){
             </ul> */}
             <div className="author-stat">
               {blogs && <span>{Object.keys(blogs).length} Blogs</span>}
-              <span>191 Comments</span>
+              <span>{number} Comments</span>
             </div>
           </div>
         </div>
@@ -65,7 +90,7 @@ function getDate(date){
                     <a href="#">{blogs[key]?.Author}</a>
                   </li>
                   <li><i className="fi fi-rr-calendar-minus"/><a href="#">{getDate(blogs[key]?.Date)}</a></li>
-                  <li><i className="fi fi-rr-clock-three"/>10 Comments</li>
+                  <li><i className="fi fi-rr-clock-three"/>{getComments(key)} Comments</li>
                 </ul>
               </div>
             </div>)

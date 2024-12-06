@@ -4,6 +4,7 @@ import Footer from '../Components/Footer'
 import { useNavigate } from 'react-router-dom'
 import UserContext from './Context/UserContext'
 import Firebase from '../Firebase'
+import ScrollToTop from '../Components/ScrollToTop'
 const BlogDetailComp = React.lazy(()=>import('../Components/BlogComponents/BlogDetailComp'))
 
 const Blogdetails = () => {
@@ -13,18 +14,18 @@ const Blogdetails = () => {
   const[loading,setloading]=useState(false)
   const[array,setarray]=useState([])
   const[nextblog,setnextblog]=useState(null)
+  const[current,setcurrent]=useState(JSON.parse(localStorage.getItem("BlogDetails")))
   const[previousblog,setpreviousblog]=useState(null)
   useEffect(()=>{
     setloading(true)
     if(alldata){
-      const blogdetails=JSON.parse(localStorage.getItem("BlogDetails"))
-      if(!blogdetails) return navigate("/")
-      const result=alldata.filter((obj)=>obj.BlogKey===blogdetails)
+      if(!current) return navigate("/")
+      const result=alldata.filter((obj)=>obj.BlogKey===current)
       if(result.length===0) return navigate("/")
       setdata(result[0]);
     }
     setloading(false)
-  },[alldata])
+  },[alldata,current])
   useEffect(()=>{
     if(data){
       setloading(true)
@@ -61,9 +62,10 @@ const Blogdetails = () => {
       <Header blog="active"/>
       {loading && <div className='preloaders'><div className="loaders"></div></div>}
       <Suspense fallback={<div className='preloaders'><div className="loaders"></div></div>}>
-        <BlogDetailComp data={data} thisuserallblog={array} previous={previousblog} next={nextblog}/>
+        <BlogDetailComp data={data} thisuserallblog={array} previous={previousblog} next={nextblog} fun={setcurrent}/>
       </Suspense>
       <Footer/>
+      <ScrollToTop/>
     </div>
   )
 }
